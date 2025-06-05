@@ -65,7 +65,7 @@ const Header: React.FC<HeaderProps> = ({
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center" onClick={closeMobileMenu}>
-            <img src={`${process.env.PUBLIC_URL}/images/aivisor_logo_white.png`} alt="Aivisor Logo" className="h-10" />
+            <img src={`${process.env.PUBLIC_URL}/images/aivisor_logo_light_blue.png`} alt="Aivisor Logo" className="h-12" />
           </Link>
           
           {/* Desktop Navigation */}
