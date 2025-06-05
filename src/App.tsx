@@ -30,7 +30,7 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
+      <Router basename="/aivisor">
         <div className="min-h-screen bg-gray-50">
           <Header isLoggedIn={false} />
           {/* Add padding to account for fixed header */}
