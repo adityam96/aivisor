@@ -26,6 +26,11 @@ const Header: React.FC<HeaderProps> = ({
       if (mobileMenuOpen && currentScrollY < lastScrollY && currentScrollY > 50) {
         setMobileMenuOpen(false);
       }
+
+      // Close mobile menu when scrolling down
+      if (mobileMenuOpen && currentScrollY > lastScrollY && currentScrollY > 50) {
+        setMobileMenuOpen(false);
+      }
       
       if (isScrolled !== scrolled) {
         setScrolled(isScrolled);
@@ -60,7 +65,7 @@ const Header: React.FC<HeaderProps> = ({
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center" onClick={closeMobileMenu}>
-            <img src={`${process.env.PUBLIC_URL}/images/aivisor_logo.png`} alt="Aivisor Logo" className="h-10" />
+            <img src={`${process.env.PUBLIC_URL}/images/aivisor_logo_white.png`} alt="Aivisor Logo" className="h-10" />
           </Link>
           
           {/* Desktop Navigation */}
