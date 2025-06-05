@@ -14,14 +14,24 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
   
   // Add scroll event listener
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 10;
+      const currentScrollY = window.scrollY;
+      const isScrolled = currentScrollY > 10;
+      
+      // Close mobile menu when scrolling up
+      if (mobileMenuOpen && currentScrollY < lastScrollY && currentScrollY > 50) {
+        setMobileMenuOpen(false);
+      }
+      
       if (isScrolled !== scrolled) {
         setScrolled(isScrolled);
       }
+      
+      setLastScrollY(currentScrollY);
     };
     
     window.addEventListener('scroll', handleScroll);
@@ -29,14 +39,27 @@ const Header: React.FC<HeaderProps> = ({
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [scrolled]);
+  }, [scrolled, mobileMenuOpen, lastScrollY]);
+
+  // Function to close mobile menu
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
+  // Handle logout and close menu
+  const handleLogout = () => {
+    closeMobileMenu();
+    if (onLogout) {
+      onLogout();
+    }
+  };
   
   return (
     <header className={`${scrolled ? 'bg-blue-600/90 backdrop-blur-sm' : 'bg-blue-600'} text-white shadow-md fixed top-0 left-0 right-0 z-50 transition-all duration-300`}>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center" onClick={closeMobileMenu}>
             <img src={`${process.env.PUBLIC_URL}/images/aivisor_logo.png`} alt="Aivisor Logo" className="h-10" />
           </Link>
           
@@ -134,27 +157,27 @@ const Header: React.FC<HeaderProps> = ({
               </div>
             </div>
             <nav className="flex flex-col space-y-3">
-              <Link to="/tools" className="px-3 py-2 rounded-md hover:bg-white hover:text-blue-600 transition-colors">Explore Tools</Link>
-              <Link to="/blog" className="px-3 py-2 rounded-md hover:bg-white hover:text-blue-600 transition-colors">Blog</Link>
-              <Link to="/creators" className="px-3 py-2 rounded-md hover:bg-white hover:text-blue-600 transition-colors">Creators</Link>
-              <Link to="/about" className="px-3 py-2 rounded-md hover:bg-white hover:text-blue-600 transition-colors">About Us</Link>
+              <Link to="/tools" className="px-3 py-2 rounded-md hover:bg-white hover:text-blue-600 transition-colors" onClick={closeMobileMenu}>Explore Tools</Link>
+              <Link to="/blog" className="px-3 py-2 rounded-md hover:bg-white hover:text-blue-600 transition-colors" onClick={closeMobileMenu}>Blog</Link>
+              <Link to="/creators" className="px-3 py-2 rounded-md hover:bg-white hover:text-blue-600 transition-colors" onClick={closeMobileMenu}>Creators</Link>
+              <Link to="/about" className="px-3 py-2 rounded-md hover:bg-white hover:text-blue-600 transition-colors" onClick={closeMobileMenu}>About Us</Link>
               
               {isLoggedIn ? (
                 <>
                   {userRole === 'creator' && (
-                    <Link to="/dashboard" className="hover:text-blue-200 transition-colors">
+                    <Link to="/dashboard" className="hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>
                       Dashboard
                     </Link>
                   )}
                   {userRole === 'admin' && (
-                    <Link to="/admin" className="hover:text-blue-200 transition-colors">
+                    <Link to="/admin" className="hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>
                       Admin
                     </Link>
                   )}
-                  <Link to="/profile" className="hover:text-blue-200 transition-colors">Profile</Link>
-                  <Link to="/messages" className="hover:text-blue-200 transition-colors">Messages</Link>
+                  <Link to="/profile" className="hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Profile</Link>
+                  <Link to="/messages" className="hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Messages</Link>
                   <button 
-                    onClick={onLogout} 
+                    onClick={handleLogout} 
                     className="text-left hover:text-blue-200 transition-colors"
                   >
                     Logout
@@ -162,8 +185,8 @@ const Header: React.FC<HeaderProps> = ({
                 </>
               ) : (
                 <div className="flex flex-col space-y-2 pt-2 border-t border-blue-500">
-                  <Link to="/login" className="hover:text-blue-200 transition-colors">Login</Link>
-                  <Link to="/register" className="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-blue-50 transition-colors text-center">Register</Link>
+                  <Link to="/login" className="hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>Login</Link>
+                  <Link to="/register" className="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-blue-50 transition-colors text-center" onClick={closeMobileMenu}>Register</Link>
                 </div>
               )}
             </nav>
@@ -175,3 +198,4 @@ const Header: React.FC<HeaderProps> = ({
 };
 
 export default Header;
+
