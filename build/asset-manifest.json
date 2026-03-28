@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/aivisor/static/css/main.633e96c0.css",
+    "main.js": "/aivisor/static/js/main.a70bcf9c.js",
+    "static/js/453.05e3e6df.chunk.js": "/aivisor/static/js/453.05e3e6df.chunk.js",
+    "index.html": "/aivisor/index.html",
+    "main.633e96c0.css.map": "/aivisor/static/css/main.633e96c0.css.map",
+    "main.a70bcf9c.js.map": "/aivisor/static/js/main.a70bcf9c.js.map",
+    "453.05e3e6df.chunk.js.map": "/aivisor/static/js/453.05e3e6df.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.633e96c0.css",
+    "static/js/main.a70bcf9c.js"
+  ]
+}
